@@ -13,7 +13,7 @@ post '/login' do
 	if user != nil && user.authenticate(params[:password])
 		session[:user_id] = user.id
 		session[:needs_error]= false
-		redirect "/user/#{user.id}"
+		redirect "/users/#{user.id}"
 	else
 		erb :login
 	end
