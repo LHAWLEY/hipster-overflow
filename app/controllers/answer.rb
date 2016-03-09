@@ -1,7 +1,3 @@
-get '/' do
-  redirect '/answers'
-end
-
 get '/answers' do
   erb :index
 end

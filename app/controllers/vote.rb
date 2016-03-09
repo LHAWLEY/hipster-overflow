@@ -1,7 +1,3 @@
-get '/' do
-  redirect '/votes'
-end
-
 get '/votes' do
   erb :index
 end

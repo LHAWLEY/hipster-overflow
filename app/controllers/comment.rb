@@ -1,7 +1,3 @@
-get '/' do
-  redirect '/comments'
-end
-
 get '/comments' do
   erb :index
 end

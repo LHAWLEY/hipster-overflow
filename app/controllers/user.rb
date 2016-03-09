@@ -1,7 +1,3 @@
-get '/users' do
-  erb :index
-end
-
 get '/users/:id/vote' do
 
   redirect "/users"
