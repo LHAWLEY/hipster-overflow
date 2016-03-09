@@ -1,164 +1,84 @@
-# AJAXifying Hacker News
+# DBC Sinatra Overflow
 
 ## Learning Competencies
 
-  * making AJAX requests using jQuery
-  * having a server respond with different data-types (strings, JSON, partials)
-  * writing AJAX requests in a modular, testable way.
+* Given a specification, implement an HTTP application that generates appropriate responses to requests using Sinatra or Rails
 
 ## Summary
 
-In this challenge, you'll be AJAX-ifying a working Sinatra app. By the end of today, your Hacker News clone will allow users to vote on posts, delete posts, create new posts, and sort all posts without ever refreshing the page.
+Let's get our feet wet building a substantial Sinatra application from the ground up: a [StackOverflow](http://stackoverflow.com) clone.
 
-To get started, download the skeleton, install your dependencies, and create and seed your database.
+Feel free to take a few minutes and peruse StackOverflow to gather a good understanding of what you will be building. The goal is to focus on building a well-structured Sinatra application with a good mixture of front-end and back-end features.  Focus on defining clear routes, creating clean templates, and enhancing your application by making AJAX calls.
 
-## Releases
+## Strategy
 
-### Release 0 : Voting
+Before you dive to deeply into the code, be clear with your team on three things:
 
-Press the vote button next to a post. You'll notice the page refreshes, and the points count of the post has increased. You'll also notice in your shotgun window that your server had to make 21 SQL queries when the page refreshed! Your job is to speed up the load time by using AJAX. If done correctly, the act of clicking a vote button will not cause the entire page to refresh, but instead only update the color of the button — while still updating the database.
+1. Set expectations for the project.
+2. Decide on your MVP
+3. Break your MVP down into deliverable features
 
-Here's the basic flow of this particular AJAX request:
+## Objectives
 
-1. You should bind an event listener to any anchor tag of the vote-button class
-2. To stop a client refresh from occuring, the provided callback function should prevent the default behavior of clicking a link.
-3. It should then make an AJAX request to the server, hitting the get '/posts/:id/vote' route with the right id value.
-4. The server should update the vote total of the given post in the database.
-5. The server response should include everything the client (your JS callback function) needs to update the DOM..
-6. The client, after being notified of a successful response by the server, should update the vote count and change the color of the given vote button to red.
+These instructions are left deliberately ambiguous, both to give you flexibility in your implementation and because clarifying ambiguous requirements is at least 30% of an engineer's job.  At.  Least.
 
-You'll need to alter the get '/posts/:id/vote' route  and write some custom JavaScript and jQuery to get this working. Here's the basic syntax for an AJAX request using jQuery.
+Users should be able to post questions.  Other users should be able to answer them.  Users should be able to respond to both questions and answers.  Like StackOverflow, the responses should just be a flat list.
 
-```javascript
-  // $.ajax takes a hashmap of options as an argument.
-  var ajaxRequest = $.ajax({
-    // these two attributes determine which route in your controller will be called.
-    url: "/foo",
-    type: 'GET',
-    // the 'data' attribute determines what data is sent to the server.
-    // The server will be able to access these values using the params hash.
-    // If the server only needs to know information passed in the URL, this attribute is not necessary.
-    data: { bar: 'baz' }
-  })
+The person who posted a question can declare one of the user-submitted answers "the best."
 
-  // the .done function takes a callback, which will only be fired if the server responds
-  // with a success status code. the callback will receive arguments corresponding to the
-  // request object, status, and data sent from the server.
-  ajaxRequest.done(someCallbackFunction)
+Users should be able to vote on questions, answers, and responses (both upvotes and downvotes) - only once.
 
-  // like the .done function, the .fail function will fire off a callback if the server responds
-  // with an error status code.
-  ajaxRequest.fail(someOtherCallbackFunction)
-```
+Users cannot add a question, answer, or vote unless they're logged in, but they can view all of the above when logged out.
 
-What does the server need to know to update a given vote total? What does the client need to know to update the DOM? How does the client get access to data sent from the server, and vice versa? You'll need to figure this all out to make this functional.
+Stretch: Responses should be sorted chronologically, with oldest first.  Answers should be sorted by "the best" first, followed by most highly-voted.
 
+Stretch: Users should be able to see questions sorted three ways: highest-voted, most recent, and "trending."
 
-### Release 1 : Points
+### Polymorphic Associations
 
-Sure, a successful vote causes the upvote arrow to change color — but the point score of the post hasn't been updated! Your task in this release is to asynchronously update a post's points value on the page whenever someone clicks the vote button
+Because there are multiple "votable" models &mdash; questions, answers, and responses &mdash; we have the opportunity to use [polymorphic associations](http://guides.rubyonrails.org/association_basics.html#polymorphic-associations).  Instead of having three vote-related tables like `answer_votes`, `question_votes`, etc. polymorphic associations enable you to have a single `votes` table with a `type` column that indicates what kind of thing was voted on.  You may also want to consult [Rich on Rails blog post on polymorphic associations][rorpa].
 
-In release 0, you were asked to send data from the server to the client that identified which vote button to update. You sent this data as an unformatted string. That is a viable solution when you have a single piece of information to transmit, but becomes untenable when you need to send more than one piece of information -- like a post ID and a vote total. For this release, you should send back a string formatted in JSON. Your code will look something like this:
+Likewise, a `Response` can belong to either an `Answer` or a `Question`.
 
-```ruby
-  get '/posts/:id/vote' do
-    ##logic for adding a vote to a post.
+That is, instead of the "type" being encoded in the table name, it's encoded as a field in the table.
 
-    content_type :json
-    { foo: 'bar', baz: 'qux' }.to_json
-  end
-```
+The decision to make use of Polymorphic Associations is up to your group. **You are not required to dive into this new concept right now.** It is 100% possible to simply have a `answer_votes` and `question_votes` table to store the different types of votes and a `answer_responses` and `question_responses` table to store the different types of responses.
 
-The .done() callback will now have access to the data passed from the server, which can be accessed as a JavaScript hashmap.
+### AJAX
 
-### Release 2 : Deleting
+We need to practice our new AJAX skills. Your team should decide what specific pieces of functionality y'all want to AJAX. A good place to start is AJAXing the voting functionality. 
 
-Now that you've got voting up and running, you should make the "delete this post" link functional. Clicking the link should delete the associated post from the database and consequently remote the post from the DOM.
+For example, instead of refreshing the page when a user upvotes or downvotes, we just want to make a quick AJAX call to our server to send that info and update the vote count on our page.
 
-We've already created a skeleton route for you to use. You'll need to write the body of that route, an event listener, and callback functions to make this work.
+### Pro Developer Tips
 
-### Release 3 : Creating
+* You should track your work / user stories and their progress by means of an electronic tracking application Trello is a common one, Pivotal Tracker is another
+* _Optional_:  Add a chat application.  Many teams, especially those that work remotely, find it helpful to create a chat environment in either Slack, HipChat or some other technology.  Integrate this with GitHub and CI and hygeinic git behavior, you can work as well separated by miles as you might while standing in the same room together.
 
-With deletion done, you're on to your hardest challenge yet — getting the creation form at the bottom of the page to work. Your first challenge will be to send the the right data to the server. Look into using jQuery's .serialize() function -- its a useful way to get data out of forms.
+### Checkpoints
 
-You've already had routes respond with an unformatted string and with a string formatted as JSON. For this release, you should have your server return a string formmated in HTML, a.k.a. a partial. You can then append the partial directly to the page.
+* Your team should produce a repo inside of your cohort's organization in GitHub
+* Your first commit should be a `README.md` containing:
+ * Your team name
+ * Your team members' names
+ * The user stories that define your MVP
+* You should practice "good" git workflow and commit often
+  * **You should not merge your own branches. A team member should review your code then merge it.** 
+* You should have multiple AJAX calls to enhance a user's experience
+* You will be demo-ing your MVP
+ * Show us your app doing the essential functionalities listed above
 
-### Release 4 : Are you sure everything works?
-
-Great, you've created a new post! Does its vote button work? its delete link? Probably not. Get them working.
-
-There are many ways to solve this problem. [jQuery's implementation of event delegation](https://learn.jquery.com/events/event-delegation/) may prove to be useful.
-
-### Release 5 : Validations
-
-Users can currently create posts with blank titles. You should prevent that from happening using ActiveRecord validations. If a post fails to create, use the server must let the client know, and the client should let the user know by updating the DOM.
-
-Servers provide an easy way for surfacing errors -- HTTP status codes. Codes in the 200's correspond to successful requests, while  codes in the 400's and 500's correspond to errors. The $.ajax() function will decide which callback to fire based on the error code returned by the server. You can set error codes like this in Sinatra:
-
-```ruby
-  post '/posts' do
-    #logic for attempting to save a post.
-    if @post.save
-      status 200
-      erb :_post, :layout => false
-    else
-      status 422
-    end
-  end
-```
-
-### Release 6 : Sorting
-
-Now its time to make the links at the top of the page work.
-
-  * When a user clicks 'new', the page should display a list of posts sorted by creation date.
-  * When a user clicks 'comments', the page should display a list of posts sorted by comment count.
-  * When a user clicks 'popular', the page should display a list of posts sorted by point count.
-
-All of this should be handled by AJAX requests. It's up to you how to architect this system -- should there be different routes in the controller for each sorting strategy? one route that responds to different parameters? What should the return value of the routes be?
-
-This data that needs to be sent back is likely too complex and large to be sent as HTML. Instead, the server should respond with a nested JSON object, and the client should parse that data out, turn it into HTML, and update the DOM.
-
-### Release 7 : OOJS
-
-Now that you've got your functionality working, you should attempt to organize your code in a modular and extendable way. A series of 40-line functions won't work! Separate your code out into the MVC structure:
-
-  * There should be a single object responsible for talking to your DOM (e.g. the View)
-  * There should be a single object responsible for making AJAX requests (e.g. the Server)
-  * There should be a controller object responsible for managing the Server and View objects, as well as binding event listeners.
-
-Handling $.ajax .done() and .fail() callbacks can be difficult in MVC, as they are tightly coupled to the request itself. To get around that, have your model return the request object to be modified in your controller. like this:
-
-```javascript
-  Server.prototype = {
-    makeDeleteRequest: function(opts) {
-      var requestObect = $.ajax({
-        //the details of the request go here.
-        })
-
-      return requestObject
-    }
-  }
+## Resources
+- [Git Workflow for Teams](https://gist.github.com/mikelikesbikes/ccbf4c7fd90e647138c6)
+- [Git: Rebase vs Merge](https://www.atlassian.com/git/tutorials/merging-vs-rebasing/)
+- [Git Resources](http://git-scm.com/book/en/v2/Getting-Started-About-Version-Control)
+- [Sessions and User Authentication](https://talks.devbootcamp.com/sessions-and-user-authentication) 
+- [Manifesto for Agile Practices](http://agilemanifesto.org/)
+- [Sample Scrum Board](http://amareshv.files.wordpress.com/2011/03/fairydustboard_20110324.jpg)
+- [Trello](https://trello.com/) - great resource to organize workflow within a group project
 
 
-  Controller.prototype = {
-    deletePost: function() {
-     // the controller would be passed a server object on instantiation.
-     var request = this.server.makeDeleteRequest( options );
-     request.done( this.removePost );
-     request.fail( this.displayError );
-    }
-  }
-```
-
-### Release 8 : Testing
-
-Jasmine is a unit testing framework for JavaScript, meaning that it is meant to test your functions independent of the DOM, server, or any other part of your app. Unit testing DOM-interactive is consequently difficult. You will have to mock all elements on the DOM to
-
-What should you test? All the functions that interact with the server -- e.g. your AJAX calls -- should not be tested. Instead, you should test all your functions that do simple transforms in JavaScript or alter the DOM. If you haven't already, you should name and separate out your callbacks from your AJAX functions, so you can test your callbacks independently of AJAX.
-
-Refer to your Orange Trees challenge for an example of DOM testing in Jasmine.
-
-
-
-
+[Trello]: https://trello.com/
+[Slack]: https://slack.com/
+[rorpa]: http://richonrails.com/articles/polymorphic-associations-in-rails
+[cls]: http://en.wikipedia.org/wiki/Command-line_interface
