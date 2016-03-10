@@ -13,13 +13,11 @@ get '/questions/new' do
   # will put an if/else at the top of the new question form asking for session permission
   # Need to include user id field for login
  post '/questions/new' do
-   "hello"
    @question = Question.new(title: params[:title], body: params[:body] , author: current_user)
    if @question.save
      redirect '/'
    else
      @errors = @question.errors.full_messages
-     "something fucked up"
      erb :'questions/new'
    end
  end
@@ -29,6 +27,26 @@ get '/questions/:id' do
   erb :'questions/show'
 end
 
-delete '/questions/:id' do
-  # write logic for deleting questions here.
+get '/questions/:id/delete' do
+  question = Question.find(params[:id])
+  if question.user_id == current_user.id
+    question.destroy
+    redirect '/questions'
+  end
+  redirect '/'
+end
+
+get '/questions/:id/vote' do
+  question = Question.find(params[:id])
+  new_vote = Vote.new(voter: current_user)
+  question.votes << new_vote
+
+  redirect "/questions/#{question.id}"
+end
+
+get '/questions/:id/delete-vote' do
+  question = Question.find(params[:id])
+  vote = question.votes.find_by(user_id: current_user.id)
+  vote.destroy
+    redirect "/questions/#{question.id}"
 end

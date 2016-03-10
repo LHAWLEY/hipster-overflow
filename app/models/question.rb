@@ -8,4 +8,16 @@ class Question < ActiveRecord::Base
   def made_on
   	Faker::Date.between(100.days.ago, Date.today)
   end
+
+  def total_votes
+    self.votes.count
+  end
+
+  def total_comments
+    self.comments.count
+  end
+
+  def total_answers
+    self.answers.count
+  end
 end
