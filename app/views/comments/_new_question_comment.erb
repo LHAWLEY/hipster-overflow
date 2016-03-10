@@ -1,0 +1,8 @@
+<h1>Add a Comment</h1>
+<% if current_user %>
+  <form action="/questions/<%= @question.id %>/comments", method="POST">
+    <label for="comment_text">Comment:</label></br>
+    <textarea id="comment_text" name="comment[body]"></textarea></br>
+    <input type="submit" class="button" value="Submit Comment"></input>
+  </form>
+<% end %>

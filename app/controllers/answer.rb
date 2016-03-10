@@ -7,8 +7,6 @@ get '/answers/new' do
   erb :'/answers/new'
 end
 
-
-
 get '/answers/:id' do
   @answer = Answer.find(params[:id])
   erb :'/answers/show'
@@ -18,6 +16,14 @@ get '/answers/:id/vote' do
   # @answer = Answer.find(params[:id]) should be user
   @answer.votes << Vote.new#(user)
   redirect "/answers"
+end
+
+post '/answers/:id/comments' do
+  answer = Answer.find(params[:id])
+  answer.comments.create(body: params[:comment][:body], commentor: current_user)
+
+  redirect "/questions/#{answer.question.id}"
+
 end
 
 # for editing an answer
