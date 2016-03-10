@@ -15,8 +15,9 @@ post '/questions/new' do
   if @question.save
     redirect '/'
   else
+    @errors = @question.errors.full_messages
     "something fucked up"
-    erb :errors
+    erb :'questions/new'
   end
 end
 
