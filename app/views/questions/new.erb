@@ -1,6 +1,17 @@
- <form id="new-question-form" action "/questions" method="post" >
-    <input type="text" name="title" placeholder="Titles are so dated">
-    <input type="text" name="body" placeholder="ugh">
+<% if @errors %>
+  <p>Try again, but this time without</p>
+  <ul class="error-list pad-b-2">
+    <% @errors.each do |error| %>
+      <li class="error-item"><%= error %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+
+
+  <form id="new-question-form" action "/questions" method="post" >
+    <input type="text" name="question[title]" value= "<% @question.try(:title) %>" placeholder="Titles are so dated">
+    <input type="text" name=value= "<% @question.try(:body) %>" placeholder="ugh">
     <input type="submit" value="Nobody cares, but sure">
   </form>
 

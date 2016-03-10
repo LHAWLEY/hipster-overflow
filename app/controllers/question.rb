@@ -11,7 +11,7 @@ end
 # will put an if/else at the top of the new question form asking for session permission
 post '/questions/new' do
   "hello"
-  @question = Question.new(title: params[:title], body: params[:body])
+  @question = Question.new(params[:question])
   if @question.save
     redirect '/'
   else
@@ -20,7 +20,8 @@ post '/questions/new' do
   end
 end
 
-get '/question/:id' do
+get '/questions/:id' do
+  "hello"
   erb :'questions/show'
 end
 
