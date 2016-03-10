@@ -22,12 +22,12 @@
   <nav>
     <ul>
       <% if logged_in? %>
-        <li><a href="/" class="logo left">HIPSTER<span class="bold">OVERFLOW</span></a></li>
+        <li><a href="/" class="logo left">HIPSTER<span class="bold">_UNDERFLOW</span></a></li>
         <li><a href="/logout" class="nav-button right">LOG OUT</a></li>
         <li><a href="/questions" class="nav-button right">QUESTIONS</a></li>
         <li><a href="/users/<%=current_user.id%>" class="nav-button right user"><%=current_user.username.upcase%></a></li>
       <% else %>
-        <li><a href="/" class="logo">HIPSTER<span class="bold">OVERFLOW</span></a></li>
+        <li><a href="/" class="logo">HIPSTER<span class="bold">_UNDERFLOW</span></a></li>
       <% end %>
     </ul>
   </nav>

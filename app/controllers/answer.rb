@@ -7,16 +7,7 @@ get '/answers/new' do
   erb :'/answers/new'
 end
 
-#this doesn't work
-post '/answers' do
-  new_answer = Answer.new(body: params[:answer], author: params[:author] )#???
-  if new_answer.save
-    redirect "/answers"
-  else
-    #errors
-    erb :'answers/new'
-  end
-end
+
 
 get '/answers/:id' do
   @answer = Answer.find(params[:id])

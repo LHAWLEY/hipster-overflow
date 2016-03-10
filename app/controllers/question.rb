@@ -13,16 +13,24 @@ get '/questions/new' do
   # will put an if/else at the top of the new question form asking for session permission
   # Need to include user id field for login
  post '/questions/new' do
-   "hello"
    @question = Question.new(title: params[:title], body: params[:body] , author: current_user)
    if @question.save
      redirect '/'
    else
      @errors = @question.errors.full_messages
-     "something fucked up"
      erb :'questions/new'
    end
  end
+
+post '/questions/:id/answer' do
+  @new_answer = Answer.new(body: params[:answer], user_id: current_user.id, question_id: params[:id])
+  if @new_answer.save
+    redirect "/questions/#{params[:id]}" #???
+  else
+    #errors
+    erb :'answers/new'
+  end
+end
 
 get '/questions/:id' do
   @question = Question.find(params[:id])
