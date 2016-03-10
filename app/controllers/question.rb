@@ -23,11 +23,7 @@ get '/questions/new' do
  end
 
 post '/questions/:id/answer' do
-  # question =  Question.find(params[:id])
-  # "#{question.id} is question"
-  author = current_user.id
-  # "#{author} is author"
-  @new_answer = Answer.new(body: params[:answer], user_id: author, question_id: params[:id])
+  @new_answer = Answer.new(body: params[:answer], user_id: current_user.id, question_id: params[:id])
   if @new_answer.save
     redirect "/questions/#{params[:id]}" #???
   else
