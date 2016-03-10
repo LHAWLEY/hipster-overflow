@@ -10,8 +10,8 @@
 
 
   <form id="new-question-form" action "/questions" method="post" >
-    <input type="text" name="question[title]" value= "<% @question.try(:title) %>" placeholder="Titles are so dated">
-    <input type="text" name=value= "<% @question.try(:body) %>" placeholder="ugh">
+    <input type="text" name="title" value= "<% @question.try(:title) %>" placeholder="Titles are so dated">
+    <input type="text" name="body" value="<% @question.try(:body) %>" placeholder="ugh">
     <input type="submit" value="Nobody cares, but sure">
   </form>
 

@@ -9,9 +9,10 @@ end
 
 # only users should be able to add new questions
 # will put an if/else at the top of the new question form asking for session permission
+# Need to include user id field for login
 post '/questions/new' do
   "hello"
-  @question = Question.new(params[:question])
+  @question = Question.new(title: params[:title], body: params[:body] ])
   if @question.save
     redirect '/'
   else
