@@ -23,9 +23,9 @@
   <% end %>
 
 
-  <form method="post" action="/answers">
+  <form method="post" action="/questions/<%= @question.id %>/answer">
     <label for="answer">Your Answer: </label>
-    <input id="answer" name="answer[body]" type="text" >
+    <input id="answer" name="answer" type="text" >
     <br>
 
     <input type="submit" value="Submit" class="button">
