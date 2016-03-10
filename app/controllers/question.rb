@@ -1,4 +1,5 @@
 get '/questions' do
+  @questions = Question.all
   erb :index
 end
 
@@ -11,7 +12,7 @@ end
 # Need to include user id field for login
 post '/questions/new' do
   "hello"
-  @question = Question.new(title: params[:title], body: params[:body] ])
+  @question = Question.new(title: params[:title], body: params[:body] , author: current_user)
   if @question.save
     redirect '/'
   else
