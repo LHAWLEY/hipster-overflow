@@ -1,0 +1,10 @@
+<div class="answer_container">
+
+  <h3>Answer:<h4><%= @answer.body %><br>at <%= @answer.created_at %> by
+  User: <%= @answer.author.username %></h4></h3>
+
+<!--
+  the question part can be removed if you want to only show answers and later comments...probably -->
+  <p>The Original Question: <p><%= @answer.question.body %></p></p>
+
+</div>

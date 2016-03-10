@@ -1,0 +1,29 @@
+<h1>Answer a question form</h1>
+
+<main class="form-wrapper" role="main">
+
+  <% if @errors %>
+    <div class="errors-wrapper">
+      <span>Your entry could not be saved:</span>
+      <ul class="errors">
+        <% @errors.each do |error| %>
+          <li class="error"><%= error %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <form method="post" action="/answers">
+    <label for="answer">Your Answer: </label>
+    <input id="answer" name="answer[body]" type="text" >
+    <br>
+
+    <!-- this should be unnesessary -->
+<!--     <label for="author">Who are you: </label>
+    <input id="author" name="answer[author]" type="text" >
+    <br> -->
+
+    <input type="submit" value="Submit" class="button">
+  </form>
+</main>
