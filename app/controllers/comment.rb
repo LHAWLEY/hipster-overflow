@@ -1,22 +1,18 @@
-get '/comments' do
-  erb :index
-end
+post '/comments' do
+  current_user.comments.create(params[:comment])
 
-get '/comments/:id/vote' do
-
-  redirect "/comments"
+  redirect '/' # replace with json
 end
 
 delete '/comments/:id' do
-  # write logic for deleting comments here.
+  comment = current_user.comments.find_by(id: params[:id])
+  comment.destroy
+
+  redirect '/' # replace with json
 end
 
-post '/comments' do
 
-  redirect '/comments'
-end
 
-get '/comment/:id' do
 
-  erb :comment
-end
+
+
