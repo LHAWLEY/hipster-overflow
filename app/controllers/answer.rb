@@ -24,6 +24,14 @@ get '/answers/:id/vote' do
   end
 end
 
+post '/answers/:id/comments' do
+  answer = Answer.find(params[:id])
+  answer.comments.create(body: params[:comment][:body], commentor: current_user)
+
+  redirect "/questions/#{answer.question.id}"
+
+end
+
 # for editing an answer
 # put '/answers/:id' do
 #   answer = Answer.find(params[:id])

@@ -25,7 +25,7 @@ get '/questions/new' do
 post '/questions/:id/answer' do
   @new_answer = Answer.new(body: params[:answer], user_id: current_user.id, question_id: params[:id])
   if @new_answer.save
-    redirect "/questions/#{params[:id]}" #???
+    redirect "/questions/#{params[:id]}"
   else
     #errors
     erb :'answers/new'
@@ -44,6 +44,20 @@ get '/questions/:id/delete' do
     redirect '/questions'
   end
   redirect "/questions/#{question.id}"
+end
+
+get '/questions/:id/edit' do
+end
+
+post '/questions/:id/edit' do
+end
+
+post '/questions/:id/comments' do
+  question = Question.find(params[:id])
+  question.comments.create(body: params[:comment][:body], commentor: current_user)
+
+   redirect "/questions/#{question.id}"
+
 end
 
 get '/questions/:id/vote' do

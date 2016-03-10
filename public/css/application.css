@@ -290,3 +290,14 @@ textarea {
 .answer-user-details {
   display: inline-block;
 }
+
+.comment {
+  margin-top: -30px;
+  width: 60%;
+  z-index: -1;
+}
+
+.com {
+  padding-bottom: 1em;
+  border-bottom: 1px solid black;
+}
