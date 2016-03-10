@@ -22,7 +22,7 @@
     </div>
   <% end %>
 
-
+<% if logged_in? %>
   <form method="post" action="/questions/<%= @question.id %>/answer">
     <label for="answer">Your Answer: </label>
     <input id="answer" name="answer" type="text" >
@@ -30,7 +30,10 @@
 
     <input type="submit" value="Submit" class="button">
   </form>
+<% end %>
 </div>
+
+
 
 <div class="answer-container">
  <h3>Answers:</h3>
