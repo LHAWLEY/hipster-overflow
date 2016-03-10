@@ -1,12 +1,8 @@
 <h1>Add a Comment</h1>
 <% if current_user %>
-  <form action="/comments">
-    <input type="hidden" value="<%= commentable_id %>" name="comment[commentable_id]">
-    <input type="hidden" name="comment[commentable_type]" value="<%= commentable_type %>">
+  <form action="/answers/<%= @answer.id %>/comments", method="POST">
     <label for="comment_text">Comment:</label></br>
     <textarea id="comment_text" name="comment[body]"></textarea></br>
     <input type="submit" class="button" value="Submit Comment"></input>
   </form>
 <% end %>
-
-

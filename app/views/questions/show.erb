@@ -9,9 +9,17 @@
       <p>And they said: <%= @question.body %></p>
       <a href="/questions/<%= @question.id %>/vote" class="fa fa-arrow-circle-up"></a>
       <a href="/questions/<%= @question.id %>/delete-vote" class="fa fa-arrow-circle-down"></a>
-      <% if current_user.id == @question.user_id %>
+            <div class="card">
+              <% @question.comments.each do |comment| %>
+                <p><%=comment.body %> by <%=comment.commentor.username%></p>
+              <% end %>
+            </div>
+
+      <% if current_user == @question.author %>
         <a href="/questions/<%= @question.id %>/delete">Delete</a>
+        <a href="/">Edit</a>
       <% end %>
+
 </article>
 
 <div class="form-wrapper" role="div">
@@ -32,21 +40,28 @@
     <label for="answer">Your Answer: </label>
     <input id="answer" name="answer" type="text" >
     <br>
-
     <input type="submit" value="Submit" class="button">
   </form>
 <% end %>
 </div>
 
 
+<%= erb :'comments/_new_question_comment', locals: { commentable: @question } %>
+
 
 <div class="answer-container">
  <h3>Answers:</h3>
-  <% answers_of_question = @question.answers %>
-  <% answers_of_question. each do |answer| %>
+  <% @question.answers.each do |answer| %>
+  <% @answer = answer %>
     <p><%= answer.body %><br>
     <p>at <%= answer.created_at %> by</p>
   <p>User: <a href="/users/<%= answer.author.id %>"><%= answer.author.username %></a></p>
+      <div class="card">
+      <% answer.comments.each do |comment| %>
+        <p><%=comment.body %> by <%=comment.commentor.username%></p>
+      <% end %>
+    </div>
+    <%= erb :'comments/_new_answer_comment', locals: { commentable: @answer } %>
 
-<% end %>
+    <% end %>
   </div>
