@@ -74,8 +74,14 @@ end
 
 get '/questions/:id/delete-vote' do
   question = Question.find(params[:id])
-  redirect "/questions/#{question.id}" if !logged_in?
-  vote = question.votes.find_by(user_id: current_user.id)
-  vote.destroy
-  redirect "/questions/#{question.id}"
+  quest_id = "question" + question.id
+  if session[quest_id:] == current_user.id
+    redirect "/questions/#{question.id}" if !logged_in?
+    vote = question.votes.find_by(user_id: current_user.id)
+    vote.destroy
+    session[quest_id:] = current_user.id
+    redirect "/questions/#{question.id}"
+  else
+    redirect "/questions/#{question.id}"
+  end
 end
