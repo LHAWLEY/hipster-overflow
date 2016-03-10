@@ -4,4 +4,8 @@ class Question < ActiveRecord::Base
   has_many :answers
   has_many :comments, :as => :commentable
   has_many :votes, :as => :votable
+
+  def made_on
+  	Faker::Date.between(100.days.ago, Date.today)
+  end
 end
