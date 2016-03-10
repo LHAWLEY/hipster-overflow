@@ -1,28 +1,23 @@
-<article class="individual-question">
+<article class="card question">
       <h2><%= @question.title %></h2>
-      <p class='created-at'>At approximately: <%= @question.created_at %></p>
-        <p class='username'><%= @question.author.username %> asked:</p>
-        <h5>Votes: <%= @question.total_votes %></h5>
-
-
-        <span class='comment-count'></span>
-      <p>And they said: <%= @question.body %></p>
-      <a href="/questions/<%= @question.id %>/vote" class="fa fa-arrow-circle-up"></a>
-      <a href="/questions/<%= @question.id %>/delete-vote" class="fa fa-arrow-circle-down"></a>
-            <div class="card">
+      <h4> <%= @question.created_at.strftime("%d %b. %Y")  %> by <a href="/users/<%= @question.author.id %>"><%= @question.author.username %></a></h4>
+      <h5>Votes: <%= @question.total_votes %></h5>
+      <p><%= @question.body %></p>
+      <div class="vote">
+        <a href="/questions/<%= @question.id %>/vote" class="fa fa-arrow-circle-up"></a>
+        <a href="/questions/<%= @question.id %>/delete-vote" class="fa fa-arrow-circle-down"></a>
+        <% if (logged_in?) && (current_user.id == @question.user_id) %>
+          <a href="/questions/<%= @question.id %>/delete">Delete</a>
+        <% end %>
+      </div>
+</article>
+           <div class="card comment">
               <% @question.comments.each do |comment| %>
-                <p><%=comment.body %> by <%=comment.commentor.username%></p>
+                <p class="com"><%=comment.body %> by <%=comment.commentor.username%></p>
               <% end %>
             </div>
 
-      <% if current_user == @question.author %>
-        <a href="/questions/<%= @question.id %>/delete">Delete</a>
-        <a href="/">Edit</a>
-      <% end %>
-
-</article>
-
-<div class="form-wrapper" role="div">
+<div class="form-wrapper">
 
   <% if @errors %>
     <div class="errors-wrapper">
@@ -36,11 +31,10 @@
   <% end %>
 
 <% if logged_in? %>
-  <form method="post" action="/questions/<%= @question.id %>/answer">
-    <label for="answer">Your Answer: </label>
-    <input id="answer" name="answer" type="text" >
-    <br>
-    <input type="submit" value="Submit" class="button">
+  <form class="answer-form" method="post" action="/questions/<%= @question.id %>/answer">
+    <h1>ANSWER</h1>
+    <textarea id="answer" name="answer" type="text" ></textarea>
+    <button type="submit">SUBMIT</button>
   </form>
 <% end %>
 </div>
@@ -50,18 +44,26 @@
 
 
 <div class="answer-container">
- <h3>Answers:</h3>
-  <% @question.answers.each do |answer| %>
-  <% @answer = answer %>
-    <p><%= answer.body %><br>
-    <p>at <%= answer.created_at %> by</p>
-  <p>User: <a href="/users/<%= answer.author.id %>"><%= answer.author.username %></a></p>
-      <div class="card">
-      <% answer.comments.each do |comment| %>
-        <p><%=comment.body %> by <%=comment.commentor.username%></p>
-      <% end %>
+    <% @question.answers.each do |answer| %>
+    <% @answer = answer %>
+    <div class="card">
+        <p><%= answer.body %></p>
+        <h5><%= answer.votes.count %> posers thought this was cool</h5>
+        <div class="vote-buttons">
+          <a href="/answers/<%= answer.id %>/vote" class="fa fa-arrow-circle-up"></a>
+          <a href="/answers/<%= answer.id %>/delete-vote" class="fa fa-arrow-circle-down"></a>
+        </div>
+        <div class="answer-user-details">
+          <h4><%= answer.created_at.strftime("%d %b. %Y") %> by <a href="/users/<%= answer.author.id %>"><%= answer.author.username %></a></h4>
+        </div>
     </div>
-    <%= erb :'comments/_new_answer_comment', locals: { commentable: @answer } %>
-
+    <% if answer.comments.count != 0 %>
+      <div class="card comment">
+        <% answer.comments.each do |comment| %>
+          <p class="com"><%=comment.body %> by <a class="above" href="/users/<%=comment.commentor.id%>"><%=comment.commentor.username%></a></p>
+        <% end %>
+      </div>
     <% end %>
-  </div>
+    <%= erb :'comments/_new_answer_comment', locals: { commentable: @answer } %>
+  <% end %>
+</div>

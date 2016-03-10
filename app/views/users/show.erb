@@ -11,25 +11,30 @@
 </div>
 
 <div class="welcome">
-	<% @user_questions.each do |question| %>
-		<article class="card long" id="<%= question.id %>">
-			<div class="vote-stuff">
-				<a href="#" class="fa fa-arrow-circle-up"></a>
-				<h5>Posted On: <%= question.made_on.strftime("%d %b. %Y") %></h5>
-				<h5>Votes: <%= question.votes.count %></h5>
-				<h6>Answers: <%= question.answers.count %></h6>
-				<h6>Comments: <%= question.comments %></h6>
-				<a href="#" class="fa fa-arrow-circle-down"></a>
-			</div>
-<!-- 			<a href='/questions/<%= question.id %>/vote' class="fa fa-sort-desc vote-button"></a> -->
-			<div class="content">
-				<h5><a href='/questions/<%= question.id %>'><%= question.title %></a></h5>
-				<p><%= question.body %></p>
-			</div>
+	<% if @user_questions.count == 0 %>
+		<h1 class="center-text"><%= @user.username.upcase %> HAS NO QUESTIONS</h1>
+	<% else %>
+		<% @user_questions.each do |question| %>
+			<article class="card long" id="<%= question.id %>">
+				<div class="vote-stuff">
+					<h5>Posted On: <%= question.made_on.strftime("%d %b. %Y") %></h5>
+					<h5>Votes: <%= question.total_votes %></h5>
+					<h6>Answers: <%= question.total_answers %></h6>
+					<h6>Comments: <%= question.total_comments %></h6>
+					<div class="vote-buttons">
+						<a href="/questions/<%= question.id %>/vote" class="fa fa-arrow-circle-up"></a>
+						<a href="/questions/<%= question.id %>/delete-vote" class="fa fa-arrow-circle-down"></a>
+					</div>
+				</div>
+				<div class="content">
+					<h5><a href='/questions/<%= question.id %>'><%= question.title %></a></h5>
+					<p><%= question.body %></p>
+				</div>
 
-			<div class="author">
-				<h5><%= question.author.username %></h5>
-			</div>
-		</article>
+				<div class="author">
+					<h5><a href="/users/<%= question.author.id %>"><%= question.author.username %></a></h5>
+				</div>
+			</article>
+		<% end %>
 	<% end %>
 </div>

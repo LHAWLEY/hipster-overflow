@@ -12,7 +12,7 @@ Question.all.each do |question|
 	num_comments = rand(1..5)
 
 	num_answers.times do
-		question.answers << Answer.create(body: Faker::Hipster.sentences, author: User.all.sample, question: question)
+		question.answers << Answer.create(body: Faker::Hipster.sentence, author: User.all.sample, question: question)
 	end
 
 	num_votes.times do
@@ -20,7 +20,7 @@ Question.all.each do |question|
 	end
 
 	num_comments.times do
-		question.comments << Comment.new(body: Faker::Hipster.sentences, commentor: User.all.sample)
+		question.comments << Comment.new(body: Faker::Hipster.sentence, commentor: User.all.sample)
 	end
 end
 
