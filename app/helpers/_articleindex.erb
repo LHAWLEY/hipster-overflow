@@ -1,3 +1,6 @@
+<div class="questions-container">
+<% @questions.each do |question| %>
+
 <article class="individual-question">
       <h2><%= question.title %></h2>
         <span class='vote-count'></span>
@@ -6,3 +9,7 @@
         <span class='comment-count'></span>
       <p><%= question.body %></p>
 </article>
+
+<% end %>
+
+</div>
