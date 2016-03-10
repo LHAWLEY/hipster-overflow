@@ -1,26 +1,26 @@
-get '/' do
-  redirect '/answers'
-end
-
 get '/answers' do
-  erb :index
+  @question_answers = Answer.all
+  erb :'/answers'
 end
 
 get '/answers/:id/vote' do
-
+  @answer = Answer.find(params[:id])
+  @answer << Vote.new
   redirect "/answers"
 end
 
 delete '/answers/:id' do
-  # write logic for deleting answers here.
-end
-
-post '/answers' do
-
+  @answer = Answer.find(params[:id])
+  @answer.destroy
   redirect '/answers'
 end
 
-get '/answer/:id' do
+# post '/answers' do
+#
+#   redirect '/answers'
+# end
 
-  erb :answer
+get '/answer/:id' do
+  @answer = Answer.find(params[:id])
+  erb :'/answer/show'
 end
