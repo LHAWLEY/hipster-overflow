@@ -1,121 +1,188 @@
 body {
-  counter-reset:section;
-  background-color: #F6F6EF;
-  font-family: Verdana;
-  max-width: 700px;
-  margin: 0 auto;
+  margin: 0;
+  padding: 0;
 }
 
-header {
-  background-color: #F4712D;
-  padding: 5px 5px;
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #9896A4;
+  width: 100%;
+  text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 3px, rgba(0, 0, 0, 0.239216) 0px 1px 2px;
+  z-index: 1;
+  height: 70px;
 }
 
-header h1 {
-  font-size: 11pt;
-  display: inline;
+nav ul {
+  list-style-type: none;
 }
 
-header p {
-  margin-left: 5px ;
-  font-size: 10pt;
-  display: inline;
-}
-
-header p a {
-  color: black;
-  text-decoration: none;
-}
-
-header p a:nth-child(n + 2):before {
-  content: " | ";
-}
-
-article {
-  margin: 5px 5px;
-}
-
-article a.vote-button {
-  color: #8C8C8C;
-  text-decoration: none;
-  display: inline;
-  vertical-align: sub;
-}
-
-
-article h2 {
-  display: inline;
-  font-size: 10pt;
-}
-
-article:before {
-  counter-increment: section;
-  color: #8C8C8C;
-  font-size: 10pt;
-  content: counter(section) ". ";
-}
-
-article h2 a {
-  text-decoration: none;
-  color: black;
-}
-
-article p {
-  color: #8C8C8C;
-  font-size: 7pt;
-  margin: 3px 30px;
-}
-
-article p span.points:after {
-  content: " points";
-}
-
-article p span.username:before {
-  content: " by ";
-}
-
-article p span.timestamp:after {
-  content: ' hours ago';
-}
-
-article p span.comment-count:before {
-  content: ' | ';
-}
-
-article p span.comment-count:after {
-  content: ' comments | ';
-}
-
-article p a.delete {
-  text-decoration: none;
-  color: #8C8C8C;
-  text-decoration: none;
-}
-
-article p a.delete:before {
-  content: ' delete this post';
-
+nav a:hover {
+  color: #BDBDBD;
 }
 
 form {
-  margin: 15px 30px;
+  background-color: #f6f6f6;
+  margin: 0 auto;
+  padding: 1em;
+  text-align: center;
+  height: 15em;
+  width: 14em;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
-form#posts input[type='text'] {
-  width: 200px;
-  margin-left: 20px;
-  font-size: 10pt;
-  height: 17px;
-
+input {
+  margin: 2em auto;
+  display: inline-block;
+  width: 13em;
+  border: none;
+  background-color: #f6f6f6;
+  border-bottom: 1px solid black;
 }
 
-form#posts input[type='submit'] {
-  font-size: 10pt;
-  margin-left: 5px;
-  border-width: 1px;
-  font-weight: bold;
-  background-color: #F4712D;
-
-
+input:focus {
+  outline-width: 0;
+  background-color: #BDBDBD;
 }
 
+input[type='password'] {
+  width: 6em;
+  clear: both;
+}
+
+button {
+  width: 6em;
+  margin-left: 1em;
+  border: none;
+  background-color: #C5CAE9;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+button:hover {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.login-container {
+  margin-top: 0;
+}
+
+.user {
+  color: #f6f6f6;
+}
+
+.nav-button {
+  color: #fff;
+  font-size: 24px;
+  text-decoration: none;
+  margin-right: 1em;
+  margin-top: 0.3em;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.bold {
+  font-weight: bolder;
+}
+
+.logo {
+  color: #fff;
+  font-size: 32px;
+  text-decoration: none;
+}
+
+.wrapper {
+  width: 100%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.questions-container {
+  width: 100%;
+}
+
+#hero{
+  margin-top: 3em; 
+  background-image:url(http://cultr.sampleface.co.uk/wp-content/uploads/2015/05/hipster.jpg);
+  background-size:cover;
+  position:relative;
+  height:80vh;
+  overflow: hidden;
+}
+
+.header{
+  position:absolute;
+  top:20%;
+  text-align:center;
+  width:100%;
+  color:#fff;
+  font-size:36px;
+}
+
+.header h1, .header a {
+  color: #fff;
+  text-decoration: none;
+  opacity: 0.8;
+}
+
+.header a:hover {
+  color: #000;
+  opacity: 1;
+}
+
+.card {
+  margin: 50px auto 50px auto;
+  background: #fff;
+  border-radius: 2px;
+  display: block;
+  height: 100%;
+  position: relative;
+  width: 70%;
+  overflow: auto;
+  overflow-x: hidden;
+  padding-bottom: 30px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.card:hover {
+  box-shadow: 0 3px 20px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.welcome {
+  margin: 50px auto 50px auto;
+  display: block;
+  height: 100%;
+  position: relative;
+  width: 100%;
+  overflow: auto;
+  overflow-x: hidden;
+  padding-bottom: 30px;
+}
+
+.long {
+  width: 80%;
+}
+
+.vote-stuff {
+  margin: 1em;
+  width: 30%;
+  float: left;
+}
+
+.content {
+  margin: 1em;
+  width: 30%;
+  float: left;
+}
+
+.author {
+  margin: 1em;
+  width: 30%;
+  float: right;
+}

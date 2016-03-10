@@ -1,22 +1,23 @@
 enable :sessions
 
 get '/' do
+  @questions = Question.all.sample(10)
 	erb :index
 end
 
-get '/login' do
-	erb :login
+get '/users/login' do
+	erb :'users/login'
 end
 
-post '/login' do
-	user = User.find_by(username: params[:username])
-	if user != nil && user.authenticate(params[:password])
-		session[:user_id] = user.id
-		session[:needs_error]= false
-		redirect "/users/#{user.id}"
-	else
-		erb :login
-	end
+post '/users/login' do
+  user = User.find_by(username: params[:username])
+  if user && user.authenticate(params[:password])
+    session[:user_id] = user.id
+    redirect "/users/#{user.id}"
+  else
+    @errors = ["Incorrect Username/Password"]
+    erb :'users/login'
+  end
 end
 
 get '/logout' do

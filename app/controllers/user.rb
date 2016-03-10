@@ -7,12 +7,18 @@ delete '/users/:id' do
   # write logic for deleting users here.
 end
 
-post '/users' do
-
-  redirect '/users'
+get '/users/new' do
+	erb :'/users/register'
 end
 
-get '/user/:id' do
+post '/user' do
+  new_user = User.create(username: params[:username], password: [:password])
+  session[:user_id] = new_user.id
+  redirect "/users/#{new_user.id}"
+end
 
-  erb :show
+get '/users/:id' do
+  @user = User.find(params[:id])
+  @user_questions = @user.questions
+  erb :'users/show'
 end
