@@ -2,11 +2,16 @@
       <h2><%= @question.title %></h2>
       <p class='created-at'>At approximately: <%= @question.created_at %></p>
         <p class='username'><%= @question.author.username %> asked:</p>
-        <span class='vote-count'><% %></span>
+        <h5>Votes: <%= @question.total_votes %></h5>
 
 
         <span class='comment-count'></span>
       <p>And they said: <%= @question.body %></p>
+      <a href="/questions/<%= @question.id %>/vote" class="fa fa-arrow-circle-up"></a>
+      <a href="/questions/<%= @question.id %>/delete-vote" class="fa fa-arrow-circle-down"></a>
+      <% if current_user.id == @question.user_id %>
+        <a href="/questions/<%= @question.id %>/delete">Delete</a>
+      <% end %>
 </article>
 
 <div class="form-wrapper" role="div">

@@ -7,6 +7,10 @@ helpers do
     session[:user_id]
   end
 
+  def owner?
+    session[:user_id] == current_user.id
+  end
+
   def redirect_login
     if !logged_in?
       redirect '/user/new'
