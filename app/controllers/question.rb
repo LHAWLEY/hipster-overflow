@@ -63,25 +63,19 @@ end
 get '/questions/:id/vote' do
   question = Question.find(params[:id])
   redirect "/questions/#{question.id}" if !logged_in?
-  if question.votes.find_by(user_id: current_user.id) != nil
-    redirect "/questions/#{question.id}"
-  else
+  if question.votes.find_by(user_id: current_user.id) == nil
     new_vote = Vote.new(voter: current_user)
     question.votes << new_vote
+    redirect "/questions/#{question.id}"
+  else
     redirect "/questions/#{question.id}"
   end
 end
 
 get '/questions/:id/delete-vote' do
   question = Question.find(params[:id])
-  quest_id = "question" + question.id
-  if session[quest_id:] == current_user.id
-    redirect "/questions/#{question.id}" if !logged_in?
-    vote = question.votes.find_by(user_id: current_user.id)
-    vote.destroy
-    session[quest_id:] = current_user.id
-    redirect "/questions/#{question.id}"
-  else
-    redirect "/questions/#{question.id}"
-  end
+  redirect "/questions/#{question.id}" if !logged_in?
+  vote = question.votes.find_by(user_id: current_user.id)
+  vote.destroy
+  redirect "/questions/#{question.id}"
 end
