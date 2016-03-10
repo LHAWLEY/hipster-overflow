@@ -1,0 +1,17 @@
+<div class="answer-container">
+  <h1>Q's and A's</h1>
+  <ul>
+    <% @question.each do |question| %>
+        <li>Question: <%= question.title %><br>
+          created at: <%= question.created_at %>
+          by <%= question.author.username %>
+      <% question.answers.each do |answer| %>
+          <ul>
+            <li>Answer: <%= answer.body %></li>
+             Author: <%= answer.author.username %>
+          </ul>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
