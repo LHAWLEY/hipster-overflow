@@ -44,9 +44,10 @@
     <% @question.answers.each do |answer| %>
     <div class="card">
         <p><%= answer.body %></p>
+        <h5><%= answer.votes.count %> posers thought this was cool</h5>
         <div class="vote-buttons">
-          <a href="/questions/<%= @question.id %>/vote" class="fa fa-arrow-circle-up"></a>
-          <a href="/questions/<%= @question.id %>/delete-vote" class="fa fa-arrow-circle-down"></a>
+          <a href="/answers/<%= answer.id %>/vote" class="fa fa-arrow-circle-up"></a>
+          <a href="/answers/<%= answer.id %>/delete-vote" class="fa fa-arrow-circle-down"></a>
         </div>
         <div class="answer-user-details">
           <h4><%= answer.created_at.strftime("%d %b. %Y") %> by <a href="/users/<%= answer.author.id %>"><%= answer.author.username %></a></h4>
