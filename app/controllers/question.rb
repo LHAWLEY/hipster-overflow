@@ -1,6 +1,7 @@
 get '/questions' do
+  # find a way to display questions only associated with the
   @questions = Question.all
-  erb :index
+  erb :'index'
 end
 
 get '/questions/new' do
@@ -23,7 +24,7 @@ post '/questions/new' do
 end
 
 get '/questions/:id' do
-  "hello"
+  @question = Question.find(params[:id])
   erb :'questions/show'
 end
 
