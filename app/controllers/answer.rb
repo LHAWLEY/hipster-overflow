@@ -7,9 +7,8 @@ get '/answers/new' do
   erb :'/answers/new'
 end
 
-#this doesn't work
 post '/answers' do
-  new_answer = Answer.new(body: params[:answer], author: params[:author] )#???
+  new_answer = Answer.new(body: params[:answer], author: current_user )#???
   if new_answer.save
     redirect "/answers"
   else

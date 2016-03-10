@@ -8,3 +8,37 @@
         <span class='comment-count'></span>
       <p>And they said: <%= @question.body %></p>
 </article>
+
+<div class="form-wrapper" role="div">
+
+  <% if @errors %>
+    <div class="errors-wrapper">
+      <span>Your answer could not be saved:</span>
+      <ul class="errors">
+        <% @errors.each do |error| %>
+          <li class="error"><%= error %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <form method="post" action="/answers">
+    <label for="answer">Your Answer: </label>
+    <input id="answer" name="answer[body]" type="text" >
+    <br>
+
+    <input type="submit" value="Submit" class="button">
+  </form>
+</div>
+
+<div class="answer-container">
+ <h3>Answers:</h3>
+  <% answers_of_question = @question.answers %>
+  <% answers_of_question. each do |answer| %>
+    <p><%= answer.body %><br>
+    <p>at <%= answer.created_at %> by</p>
+  <p>User: <%= answer.author.username %></p>
+
+<% end %>
+  </div>
