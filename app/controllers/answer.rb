@@ -24,6 +24,14 @@ get '/answers/:id/vote' do
   end
 end
 
+get '/answers/:id/delete-vote' do
+  question = Answer.find(params[:id])
+  redirect "/answers/#{answer.id}" if !logged_in?
+  vote = answer.votes.find_by(user_id: current_user.id)
+  vote.destroy
+  redirect "/questions/#{answer.question.id}"
+end
+
 post '/answers/:id/comments' do
   answer = Answer.find(params[:id])
   answer.comments.create(body: params[:comment][:body], commentor: current_user)

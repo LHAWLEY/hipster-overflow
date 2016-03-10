@@ -63,10 +63,13 @@ end
 get '/questions/:id/vote' do
   question = Question.find(params[:id])
   redirect "/questions/#{question.id}" if !logged_in?
-  new_vote = Vote.new(voter: current_user)
-  question.votes << new_vote
-
-  redirect "/questions/#{question.id}"
+  if question.votes.find_by(user_id: current_user.id) != nil
+    redirect "/questions/#{question.id}"
+  else
+    new_vote = Vote.new(voter: current_user)
+    question.votes << new_vote
+    redirect "/questions/#{question.id}"
+  end
 end
 
 get '/questions/:id/delete-vote' do
