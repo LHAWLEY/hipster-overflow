@@ -1,7 +1,8 @@
 <% if current_user %>
-  <form action="/questions/<%= @question.id %>/comments", method="POST">
+  <form class="comments-form" id="question-comments" action="/questions/<%= @question.id %>/comments", method="POST">
+  	<h1>COMMENT</H1>
     <label for="comment_text">Comment:</label></br>
     <textarea id="comment_text" name="comment[body]"></textarea></br>
-    <input type="submit" class="button" value="Submit Comment"></input>
+    <button type="submit">SUBMIT</button>
   </form>
 <% end %>

@@ -12,7 +12,7 @@ get '/users/new' do
 end
 
 post '/user' do
-  new_user = User.create(username: params[:username], password: [:password])
+  new_user = User.create(username: params[:username], password: params[:password])
   session[:user_id] = new_user.id
   redirect "/users/#{new_user.id}"
 end
