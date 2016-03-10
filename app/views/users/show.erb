@@ -1,24 +1,20 @@
 <div class="wrapper">
 	<div id="hero">
 		<div class="header">
-			<% if logged_in? %>
-				<h1>SCROLL DOWN</h1>
-			<% else %>
-				<h1> Hi! </h1>
-				<h1>Please <a href="/users/login">log in</a> or <a href="/users/new">register</a></h1>
-			<% end %>
+			<h1>Profile Page</h1>
+			<h1>Welcome <a href="/users/<%=current_user.id%>"><%=current_user.username%></a></h1>
 		</div>
 	</div>
 </div>
 
 <div class="welcome">
-	<% @questions.each do |question| %>
+	<% @user_questions.each do |question| %>
 		<article class="card long" id="<%= question.id %>">
 			<div class="vote-stuff">
 				<h5>Posted On: <%= question.made_on.strftime("%d %b. %Y") %></h5>
 				<h5>Votes: <%= question.votes.count %></h5>
 				<h6>Answers: <%= question.answers.count %></h6>
-				<h6>Comments: <%= question.comments.count %></h6>
+				<h6>Comments: <%= question.comments %></h6>
 			</div>
 <!-- 			<a href='/questions/<%= question.id %>/vote' class="fa fa-sort-desc vote-button"></a> -->
 			<div class="content">

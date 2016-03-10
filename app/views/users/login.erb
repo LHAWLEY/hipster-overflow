@@ -1,0 +1,18 @@
+<div class="wrapper">
+	<div id="hero">
+		<div class="header">
+			<div class="login-container">
+				<% if @errors %>
+				  <% @errors.each do |error| %>
+				    <p><%= error %><p>
+				  <% end %>
+				<% end %>
+				<form method="POST" action="/users/login">
+					<input name="username" type="text" placeholder="username">
+					<input name="password" type="password" placeholder="password">
+					<button type="submit">LOG IN</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
