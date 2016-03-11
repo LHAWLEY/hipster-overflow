@@ -12,9 +12,11 @@
 
         <% if (logged_in?) && (current_user.id == @question.user_id) %>
           <a href="/questions/<%= @question.id %>/delete">Delete</a>
+          <a id="show-comment-form" href="#question-comments">Comment</a>
         <% end %>
       </div>
 </article>
+          <%= erb :'comments/_new_question_comment', locals: { commentable: @question } %>
            <div class="card comment">
               <% @question.comments.each do |comment| %>
                 <p class="com"><%=comment.body %> by <%=comment.commentor.username%></p>
@@ -42,9 +44,6 @@
   </form>
 <% end %>
 </div>
-
-
-<%= erb :'comments/_new_question_comment', locals: { commentable: @question } %>
 
 
 <div class="answer-container">

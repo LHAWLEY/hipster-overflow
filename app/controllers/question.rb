@@ -56,7 +56,11 @@ post '/questions/:id/comments' do
   question = Question.find(params[:id])
   question.comments.create(body: params[:comment][:body], commentor: current_user)
 
-   redirect "/questions/#{question.id}"
+  if request.xhr?
+
+  else
+    redirect "/questions/#{question.id}"
+  end
 
 end
 
