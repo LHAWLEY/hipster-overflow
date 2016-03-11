@@ -1,16 +1,22 @@
-<article class="card question">
+
+  <article class="card question">
+
       <h2><%= @question.title %></h2>
       <h4> <%= @question.created_at.strftime("%d %b. %Y")  %> by <a href="/users/<%= @question.author.id %>"><%= @question.author.username %></a></h4>
       <h5>Votes: <%= @question.total_votes %></h5>
       <p><%= @question.body %></p>
-      <div class="vote">
+
+<div class="vote">
         <a href="/questions/<%= @question.id %>/vote" class="fa fa-arrow-circle-up"></a>
         <a href="/questions/<%= @question.id %>/delete-vote" class="fa fa-arrow-circle-down"></a>
-        <% if (logged_in?) && (current_user.id == @question.user_id) %>
+
+         <% if (logged_in?) && (current_user.id == @question.user_id) %>
           <a href="/questions/<%= @question.id %>/delete">Delete</a>
         <% end %>
-      </div>
+      </div><div><button class="answer_button" >Answer</button></div>
+
 </article>
+
            <div class="card comment">
               <% @question.comments.each do |comment| %>
                 <p class="com"><%=comment.body %> by <%=comment.commentor.username%></p>

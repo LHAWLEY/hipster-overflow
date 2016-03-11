@@ -81,6 +81,20 @@ button:hover {
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
+.answer_button {
+  font-size: 2em;
+  text-align: center;
+  color: grey;
+  background-color: transparent;
+  height: 50px;
+  width: 150px;
+  z-index: 1;
+  cursor: pointer;
+  box-shadow: none;
+  margin-right: 610px;
+  float: right;
+}
+
 textarea {
   width: 90%;
   height: 120px;
@@ -219,11 +233,14 @@ textarea {
 .vote-buttons {
   margin-left: 3em;
   display: inline-block;
+
 }
 
 .vote {
   width: 100px;
   margin-left: 3em;
+  margin-right: 0;
+  float: left;
 }
 
 .fa {

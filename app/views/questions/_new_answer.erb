@@ -1,0 +1,21 @@
+<div class="answer-container">
+    <div class="card">
+        <p><%= answer.body %></p>
+        <h5><%= answer.votes.count %> posers thought this was cool</h5>
+        <div class="vote-buttons">
+          <a href="/answers/<%= answer.id %>/vote" class="fa fa-arrow-circle-up"></a>
+          <a href="/answers/<%= answer.id %>/delete-vote" class="fa fa-arrow-circle-down"></a>
+        </div>
+        <div class="answer-user-details">
+          <h4><%= answer.created_at.strftime("%d %b. %Y") %> by <a href="/users/<%= answer.author.id %>"><%= answer.author.username %></a></h4>
+        </div>
+    </div>
+    <% if answer.comments.count != 0 %>
+      <div class="card comment">
+        <% answer.comments.each do |comment| %>
+          <p class="com"><%=comment.body %> by <a class="above" href="/users/<%=comment.commentor.id%>"><%=comment.commentor.username%></a></p>
+        <% end %>
+      </div>
+    <% end %>
+    <%= erb :'comments/_new_answer_comment', locals: { commentable: answer } %>
+</div>

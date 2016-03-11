@@ -1,5 +1,6 @@
 <% if current_user %>
-  <form action="/answers/<%= @answer.id %>/comments", method="POST">
+  <!-- changed @answer.id to commentable.id to get answers to work properly. -->
+  <form action="/answers/<%= commentable.id %>/comments", method="POST">
     <label for="comment_text">Comment:</label></br>
     <textarea id="comment_text" name="comment[body]"></textarea></br>
     <input type="submit" class="button" value="Submit Comment"></input>

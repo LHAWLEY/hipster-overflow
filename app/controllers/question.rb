@@ -24,12 +24,14 @@ get '/questions/new' do
 
 post '/questions/:id/answer' do
   @new_answer = Answer.new(body: params[:answer], user_id: current_user.id, question_id: params[:id])
-  if @new_answer.save
-    redirect "/questions/#{params[:id]}"
-  else
-    #errors
-    erb :'answers/new'
-  end
+  if request.xhr?
+    @new_answer.save
+    erb :'questions/_new_answer', locals: { answer: @new_answer }, layout: false
+    else
+      redirect "/questions/#{params[:id]}"
+      # erb :'answers/new'
+    end
+
 end
 
 get '/questions/:id' do
@@ -44,12 +46,6 @@ get '/questions/:id/delete' do
     redirect '/questions'
   end
   redirect "/questions/#{question.id}"
-end
-
-get '/questions/:id/edit' do
-end
-
-post '/questions/:id/edit' do
 end
 
 post '/questions/:id/comments' do
