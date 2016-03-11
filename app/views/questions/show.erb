@@ -4,8 +4,12 @@
       <h5>Votes: <%= @question.total_votes %></h5>
       <p><%= @question.body %></p>
       <div class="vote">
-        <a href="/questions/<%= @question.id %>/vote" class="fa fa-arrow-circle-up"></a>
-        <a href="/questions/<%= @question.id %>/delete-vote" class="fa fa-arrow-circle-down"></a>
+
+        <% if logged_in? %>
+          <a href="/questions/<%= @question.id %>/vote" class="fa fa-arrow-circle-up"></a>
+          <a href="/questions/<%= @question.id %>/delete-vote" class="fa fa-arrow-circle-down"></a>
+        <% end %>
+
         <% if (logged_in?) && (current_user.id == @question.user_id) %>
           <a href="/questions/<%= @question.id %>/delete">Delete</a>
         <% end %>
@@ -49,10 +53,14 @@
     <div class="card">
         <p><%= answer.body %></p>
         <h5><%= answer.votes.count %> posers thought this was cool</h5>
-        <div class="vote-buttons">
-          <a href="/answers/<%= answer.id %>/vote" class="fa fa-arrow-circle-up"></a>
-          <a href="/answers/<%= answer.id %>/delete-vote" class="fa fa-arrow-circle-down"></a>
-        </div>
+
+        <% if logged_in? %>
+          <div class="vote-buttons">
+            <a href="/answers/<%= answer.id %>/vote" class="fa fa-arrow-circle-up"></a>
+            <a href="/answers/<%= answer.id %>/delete-vote" class="fa fa-arrow-circle-down"></a>
+          </div>
+        <% end %>
+
         <div class="answer-user-details">
           <h4><%= answer.created_at.strftime("%d %b. %Y") %> by <a href="/users/<%= answer.author.id %>"><%= answer.author.username %></a></h4>
         </div>
