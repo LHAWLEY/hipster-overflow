@@ -3,7 +3,7 @@
 end
 
 10.times do
-	Question.create(title: Faker::Hipster.sentence + "?", body: Faker::Hipster.paragraph, author: User.all.sample)
+	Question.create(title: Faker::Hipster.words(6).join(" ") + "?", body: Faker::Hipster.paragraph, author: User.all.sample)
 end
 
 Question.all.each do |question|
