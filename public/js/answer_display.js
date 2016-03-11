@@ -26,7 +26,7 @@ $(document).ready(function() {
 
 
     request.done(function (postComment) {
-    $(".answer-container").append(postComment)
+    $(".answer-container").prepend(postComment)
     $('#answer').val('');
     })
 
