@@ -1,5 +1,5 @@
 50.times do
-	User.create(username: Faker::Internet.user_name, password: "1")
+	User.create(username: Faker::Internet.user_name, password: "1", profile_pic: Faker::Avatar.image)
 end
 
 10.times do

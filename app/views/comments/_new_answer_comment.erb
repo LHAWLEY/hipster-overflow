@@ -1,7 +1,6 @@
 <% if current_user %>
-
   <!-- changed @answer.id to commentable.id to get answers to work properly. -->
-  <form class="comments-form" id="answer-comment" action="/answers/<%= commentable.id %>/comments", method="POST">
+  <form class="comments-form answer-comments" id="answer-comments-<%=@answer.id%>" action="/answers/<%= commentable.id %>/comments", method="POST">
     <h1>COMMENT</H1>
 
     <label for="comment_text">Comment:</label></br>

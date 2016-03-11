@@ -3,32 +3,34 @@
 
       <h2><%= @question.title %></h2>
       <h4> <%= @question.created_at.strftime("%d %b. %Y")  %> by <a href="/users/<%= @question.author.id %>"><%= @question.author.username %></a></h4>
-      <h5>Votes: <%= @question.total_votes %></h5>
+      <h5 class="vote-count">Votes: <%= @question.total_votes %></h5>
       <p><%= @question.body %></p>
 
 
       <div class="vote">
         <% if logged_in? %>
-        <a href="/questions/<%= @question.id %>/vote" class="fa fa-arrow-circle-up"></a>
-        <a href="/questions/<%= @question.id %>/delete-vote" class="fa fa-arrow-circle-down"></a>
+        <a href="/questions/<%= @question.id %>/vote" class="fa fa-arrow-circle-up upvote"></a>
+        <a href="/questions/<%= @question.id %>/delete-vote" class="fa fa-arrow-circle-down downvote"></a>
         <% end %>
 
-        <% if (logged_in?) && (current_user.id == @question.user_id) %>
-
+        <% if logged_in? && (current_user.id == @question.user_id) %>
           <a href="/questions/<%= @question.id %>/delete">Delete</a>
-          <a id="show-comment-form" href="#question-comments">Comment</a>
         <% end %>
-      </div><div><button class="answer_button" >Answer</button></div>
+
+        <% if logged_in? %>
+          <a id="show-question-comment-form" href="#question-comments">Comment</a>
+        <% end %>
+      </div>
+      <% if logged_in? %><div><button class="answer_button" >Answer</button></div><% end %>
 
 </article>
 
 
 
           <%= erb :'comments/_new_question_comment', locals: { commentable: @question } %>
-
-           <div class="card comment">
+           <div id="question-comments-container" class="card comment">
               <% @question.comments.each do |comment| %>
-                <p class="com"><%=comment.body %> by <%=comment.commentor.username%></p>
+                <p class="com"><%=comment.body %> by <span><%=comment.commentor.username%></span></p>
               <% end %>
             </div>
 
@@ -59,27 +61,29 @@
     <% @question.answers.each do |answer| %>
     <% @answer = answer %>
     <div class="card">
+        <span class="hidden"><%=answer.id%></span>
         <p><%= answer.body %></p>
-        <h5><%= answer.votes.count %> posers thought this was cool</h5>
+        <h5 class="vote-count">Votes: <%= answer.votes.count %></h5>
 
+        <div class="vote-buttons">
+          <a href="/answers/<%= answer.id %>/vote" class="fa fa-arrow-circle-up upvote"></a>
+          <a href="/answers/<%= answer.id %>/delete-vote" class="fa fa-arrow-circle-down downvote"></a>
+        </div>
         <% if logged_in? %>
-          <div class="vote-buttons">
-            <a href="/answers/<%= answer.id %>/vote" class="fa fa-arrow-circle-up"></a>
-            <a href="/answers/<%= answer.id %>/delete-vote" class="fa fa-arrow-circle-down"></a>
-          </div>
+          <a class="show-answer-comment-form" href="#answer-comments">Comment</a>
         <% end %>
 
         <div class="answer-user-details">
           <h4><%= answer.created_at.strftime("%d %b. %Y") %> by <a href="/users/<%= answer.author.id %>"><%= answer.author.username %></a></h4>
         </div>
     </div>
-    <% if answer.comments.count != 0 %>
-      <div class="card comment">
+    <%= erb :'comments/_new_answer_comment', locals: { commentable: @answer } %>
+
+      <div id="answer-comments-container-<%=answer.id%>" class="card comment">
         <% answer.comments.each do |comment| %>
-          <p class="com"><%=comment.body %> by <a class="above" href="/users/<%=comment.commentor.id%>"><%=comment.commentor.username%></a></p>
+          <p class="com"><%=comment.body %> by <span><%=comment.commentor.username%></span></p>
         <% end %>
       </div>
-    <% end %>
-    <%= erb :'comments/_new_answer_comment', locals: { commentable: @answer } %>
+
   <% end %>
 </div>
