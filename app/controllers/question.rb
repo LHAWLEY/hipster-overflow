@@ -54,10 +54,11 @@ end
 
 post '/questions/:id/comments' do
   question = Question.find(params[:id])
-  question.comments.create(body: params[:comment][:body], commentor: current_user)
+  new_comment = question.comments.create(body: params[:comment][:body], commentor: current_user)
 
   if request.xhr?
-
+    content_type :json
+    {body: new_comment.body, username: new_comment.commentor.username}.to_json
   else
     redirect "/questions/#{question.id}"
   end

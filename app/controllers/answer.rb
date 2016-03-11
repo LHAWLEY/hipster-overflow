@@ -26,9 +26,14 @@ end
 
 post '/answers/:id/comments' do
   answer = Answer.find(params[:id])
-  answer.comments.create(body: params[:comment][:body], commentor: current_user)
+  new_comment = answer.comments.create(body: params[:comment][:body], commentor: current_user)
 
-  redirect "/questions/#{answer.question.id}"
+  if request.xhr?
+    content_type :json
+    {id: answer.id, body: new_comment.body, username: new_comment.commentor.username}.to_json
+  else
+    redirect "/questions/#{answer.question.id}"
+  end
 
 end
 

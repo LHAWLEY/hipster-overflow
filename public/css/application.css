@@ -323,3 +323,7 @@ textarea {
   height: 20em;
   width: 40%;
 }
+
+.hidden {
+  display: none;
+}
