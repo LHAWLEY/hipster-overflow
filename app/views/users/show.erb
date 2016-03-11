@@ -10,9 +10,11 @@
 					</form>
 				<% else %>
 					<h1>Welcome to <%=@user.username%>'s profile</h1>
+					<img class="profile-pic" src="<%=@user.profile_pic%>">
 				<% end %>
 			<% else %>
 				<h1>Welcome to <%=@user.username%>'s profile</h1>
+				<img class="profile-pic" src="<%=@user.profile_pic%>">
 			<% end %>
 		</div>
 	</div>

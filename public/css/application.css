@@ -354,3 +354,11 @@ textarea {
 .gray {
   color: #BDBDBD;
 }
+
+.profile-pic-card {
+  margin-bottom: -50px;
+}
+
+.profile-pic {
+  margin-top: -100px;
+}

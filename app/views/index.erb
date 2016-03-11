@@ -29,6 +29,7 @@
 
 			<div class="author">
 				<h5><a href="/users/<%= question.author.id %>"><%= question.author.username %></a></h5>
+				<a href="/users/<%= question.author.id %>"><img class="profile-pic-card" src="<%=question.author.profile_pic%>"></a>
 			</div>
 		</article>
 	<% end %>
