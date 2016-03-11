@@ -52,17 +52,24 @@ post '/questions/:id/comments' do
   question = Question.find(params[:id])
   question.comments.create(body: params[:comment][:body], commentor: current_user)
 
-   redirect "/questions/#{question.id}"
+  if request.xhr?
+
+  else
+    redirect "/questions/#{question.id}"
+  end
 
 end
 
 get '/questions/:id/vote' do
   question = Question.find(params[:id])
   redirect "/questions/#{question.id}" if !logged_in?
-  new_vote = Vote.new(voter: current_user)
-  question.votes << new_vote
-
-  redirect "/questions/#{question.id}"
+  if question.votes.find_by(user_id: current_user.id) == nil
+    new_vote = Vote.new(voter: current_user)
+    question.votes << new_vote
+    redirect "/questions/#{question.id}"
+  else
+    redirect "/questions/#{question.id}"
+  end
 end
 
 get '/questions/:id/delete-vote' do

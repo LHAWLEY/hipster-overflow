@@ -5,18 +5,36 @@
       <h4> <%= @question.created_at.strftime("%d %b. %Y")  %> by <a href="/users/<%= @question.author.id %>"><%= @question.author.username %></a></h4>
       <h5>Votes: <%= @question.total_votes %></h5>
       <p><%= @question.body %></p>
+<<<<<<< HEAD
 
-<div class="vote">
+      <div class="vote">
+        <% if logged_in? %>
         <a href="/questions/<%= @question.id %>/vote" class="fa fa-arrow-circle-up"></a>
         <a href="/questions/<%= @question.id %>/delete-vote" class="fa fa-arrow-circle-down"></a>
+        <% end %>
 
-         <% if (logged_in?) && (current_user.id == @question.user_id) %>
+        <% if (logged_in?) && (current_user.id == @question.user_id) %>
+=======
+      <div class="vote">
+
+        <% if logged_in? %>
+          <a href="/questions/<%= @question.id %>/vote" class="fa fa-arrow-circle-up"></a>
+          <a href="/questions/<%= @question.id %>/delete-vote" class="fa fa-arrow-circle-down"></a>
+        <% end %>
+
+        <% if (logged_in?) && (current_user.id == @question.user_id) %>
+>>>>>>> master
           <a href="/questions/<%= @question.id %>/delete">Delete</a>
+          <a id="show-comment-form" href="#question-comments">Comment</a>
         <% end %>
       </div><div><button class="answer_button" >Answer</button></div>
 
 </article>
+<<<<<<< HEAD
 
+=======
+          <%= erb :'comments/_new_question_comment', locals: { commentable: @question } %>
+>>>>>>> master
            <div class="card comment">
               <% @question.comments.each do |comment| %>
                 <p class="com"><%=comment.body %> by <%=comment.commentor.username%></p>
@@ -46,19 +64,20 @@
 </div>
 
 
-<%= erb :'comments/_new_question_comment', locals: { commentable: @question } %>
-
-
 <div class="answer-container">
     <% @question.answers.each do |answer| %>
     <% @answer = answer %>
     <div class="card">
         <p><%= answer.body %></p>
         <h5><%= answer.votes.count %> posers thought this was cool</h5>
-        <div class="vote-buttons">
-          <a href="/answers/<%= answer.id %>/vote" class="fa fa-arrow-circle-up"></a>
-          <a href="/answers/<%= answer.id %>/delete-vote" class="fa fa-arrow-circle-down"></a>
-        </div>
+
+        <% if logged_in? %>
+          <div class="vote-buttons">
+            <a href="/answers/<%= answer.id %>/vote" class="fa fa-arrow-circle-up"></a>
+            <a href="/answers/<%= answer.id %>/delete-vote" class="fa fa-arrow-circle-down"></a>
+          </div>
+        <% end %>
+
         <div class="answer-user-details">
           <h4><%= answer.created_at.strftime("%d %b. %Y") %> by <a href="/users/<%= answer.author.id %>"><%= answer.author.username %></a></h4>
         </div>
