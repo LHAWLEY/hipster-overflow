@@ -27,11 +27,9 @@ post '/questions/:id/answer' do
   if request.xhr?
     @new_answer.save
     erb :'questions/_new_answer', locals: { answer: @new_answer }, layout: false
-    else
-      redirect "/questions/#{params[:id]}"
-      # erb :'answers/new'
-    end
-
+  else
+    redirect "/questions/#{params[:id]}"
+  end
 end
 
 get '/questions/:id' do

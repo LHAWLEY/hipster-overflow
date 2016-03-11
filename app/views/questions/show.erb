@@ -5,7 +5,7 @@
       <h4> <%= @question.created_at.strftime("%d %b. %Y")  %> by <a href="/users/<%= @question.author.id %>"><%= @question.author.username %></a></h4>
       <h5>Votes: <%= @question.total_votes %></h5>
       <p><%= @question.body %></p>
-<<<<<<< HEAD
+
 
       <div class="vote">
         <% if logged_in? %>
@@ -14,27 +14,18 @@
         <% end %>
 
         <% if (logged_in?) && (current_user.id == @question.user_id) %>
-=======
-      <div class="vote">
 
-        <% if logged_in? %>
-          <a href="/questions/<%= @question.id %>/vote" class="fa fa-arrow-circle-up"></a>
-          <a href="/questions/<%= @question.id %>/delete-vote" class="fa fa-arrow-circle-down"></a>
-        <% end %>
-
-        <% if (logged_in?) && (current_user.id == @question.user_id) %>
->>>>>>> master
           <a href="/questions/<%= @question.id %>/delete">Delete</a>
           <a id="show-comment-form" href="#question-comments">Comment</a>
         <% end %>
       </div><div><button class="answer_button" >Answer</button></div>
 
 </article>
-<<<<<<< HEAD
 
-=======
+
+
           <%= erb :'comments/_new_question_comment', locals: { commentable: @question } %>
->>>>>>> master
+
            <div class="card comment">
               <% @question.comments.each do |comment| %>
                 <p class="com"><%=comment.body %> by <%=comment.commentor.username%></p>

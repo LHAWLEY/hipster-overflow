@@ -4,13 +4,11 @@ $(document).ready(function() {
     $(this).hide();
     $('.answer-form').show();
     $('.com').hide();
+
   });
 
   $(".answer-form").on("submit", function(event) {
     event.preventDefault();
-
-
-  //   var comment_text = $("#answer").val();
 
     var $form = $(this)
     var data = $form.serialize()
@@ -22,13 +20,14 @@ $(document).ready(function() {
       data: data
     })
 
-    request.done(function (postComment) {
-    $(".answer-container").append(postComment)
-
-
     $(this).hide();
     $(".answer_button").show();
     $('.com').show();
+
+
+    request.done(function (postComment) {
+    $(".answer-container").append(postComment)
+    $('#answer').val('');
     })
 
   });
