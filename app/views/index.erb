@@ -20,13 +20,6 @@
 				<h6>Answers: <%= question.total_answers %></h6>
 				<h6>Comments: <%= question.total_comments %></h6>
 
-				<% if logged_in? %>
-					<div class="vote-buttons">
-						<a href="/questions/<%= question.id %>/vote" class="fa fa-arrow-circle-up"></a>
-						<a href="/questions/<%= question.id %>/delete-vote" class="fa fa-arrow-circle-down"></a>
-					</div>
-				<% end %>
-
 			</div>
 <!-- 			<a href='/questions/<%= question.id %>/vote' class="fa fa-sort-desc vote-button"></a> -->
 			<div class="content">

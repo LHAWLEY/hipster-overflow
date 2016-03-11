@@ -65,7 +65,15 @@ get '/questions/:id/vote' do
   if question.votes.find_by(user_id: current_user.id) == nil
     new_vote = Vote.new(voter: current_user)
     question.votes << new_vote
-    redirect "/questions/#{question.id}"
+    if request.xhr?
+      question.total_votes.to_s
+    else
+      redirect "/questions/#{question.id}"
+    end
+  end
+
+  if request.xhr?
+    question.total_votes.to_s
   else
     redirect "/questions/#{question.id}"
   end
@@ -76,5 +84,9 @@ get '/questions/:id/delete-vote' do
   redirect "/questions/#{question.id}" if !logged_in?
   vote = question.votes.find_by(user_id: current_user.id)
   vote.destroy
-  redirect "/questions/#{question.id}"
+  if request.xhr?
+    question.total_votes.to_s
+  else
+    redirect "/questions/#{question.id}"
+  end
 end

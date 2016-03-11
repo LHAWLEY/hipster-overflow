@@ -1,11 +1,19 @@
 <div class="wrapper">
 	<div id="hero">
 		<div class="header">
-				<form method="POST" action="/questions/new">
-					<input name="title" type="text" placeholder="title">
-					<textarea name="body" type="text" placeholder="question"></textarea>
-					<button type="submit">ASK</button>
-				</form>
+			<% if logged_in? %>
+				<% if (current_user.id == @user.id)%>
+					<form method="POST" action="/questions/new">
+						<input name="title" type="text" placeholder="title">
+						<textarea name="body" type="text" placeholder="question"></textarea>
+						<button type="submit">ASK</button>
+					</form>
+				<% else %>
+					<h1>Welcome to <%=@user.username%>'s profile</h1>
+				<% end %>
+			<% else %>
+				<h1>Welcome to <%=@user.username%>'s profile</h1>
+			<% end %>
 		</div>
 	</div>
 </div>

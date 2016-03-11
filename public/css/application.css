@@ -12,8 +12,6 @@ p {
   font-family: 'Merriweather', serif;
 }
 
-
-
 nav {
   position: fixed;
   top: 0;
@@ -95,7 +93,7 @@ button:hover {
 .answer_button {
   font-size: 2em;
   text-align: center;
-  color: grey;
+  color: gray;
   background-color: transparent;
   height: 50px;
   width: 150px;
@@ -334,6 +332,10 @@ textarea {
   border-bottom: 1px solid black;
 }
 
+.com span {
+  color: #BDBDBD;
+}
+
 .comments-form {
   margin-top: -3em;
   margin-bottom: 3em;
@@ -343,4 +345,12 @@ textarea {
 
 .hidden {
   display: none;
+}
+
+.green {
+  color: green;
+}
+
+.gray {
+  color: #BDBDBD;
 }
